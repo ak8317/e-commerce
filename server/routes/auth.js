@@ -1,10 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
+//midlleware
+const { authCheck } = require('../middleware/auth');
+//controller
+const { createOrUpdateUser, currentUser } = require('../controllers/auth');
 
-//import
-const { createOrUpdateUser } = require('../controllers/auth');
-
-router.get('/create-or-update-user', createOrUpdateUser);
+router.post('/create-or-update-user', authCheck, createOrUpdateUser);
+router.post('/current-user', authCheck, currentUser);
 
 module.exports = router;
